@@ -38,14 +38,14 @@ Adapt the interface across different screen sizes.
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![CSS](https://img.shields.io/badge/CSS-3-1572B6?logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 
----
+
 
 ### Backend
 
 [![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Express.js](https://img.shields.io/badge/Express.js-5-000000?logo=express&logoColor=white)](https://expressjs.com/)
 
----
+
 
 ### Database
 
@@ -113,7 +113,7 @@ git --version
 ```
 
 ### 1. Clone the Repository
----
+
 Clone the repository and navigate into the project directory:
 
 ```bash
@@ -122,7 +122,7 @@ cd friends-manager-app
 ```
 
 ### 2. Install Backend Dependencies
----
+
 
 Open a terminal in the project directory and run:
 
@@ -132,7 +132,6 @@ npm install
 ```
 
 ### 3. Install Frontend Dependencies
----
 
 Open a second terminal in the project directory and run:
 
@@ -148,7 +147,7 @@ After completing these steps, the project is ready to run locally.
 The backend and frontend run separately, so open **two terminals**.
 
 ### Terminal 1 — Backend
----
+
 From the project root:
 
 ```bash
@@ -163,7 +162,7 @@ http://localhost:5000
 ```
 
 ### Terminal 2 — Frontend
----
+
 From the project root:
 
 ```bash
