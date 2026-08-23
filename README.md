@@ -269,14 +269,22 @@ The database file is excluded from version control using:
 
 This prevents local user data from being committed to the repository.
 
-## 📸 Preview
+## 📸 Screenshots
 
-<!-- Screenshots will be added after deployment. -->
+| Login | Dashboard |
+|:---:|:---:|
+| <img src="screenshots/login.png" width="400"> | <img src="screenshots/dashboard.png" width="400"> |
+
+| Friend Details | Add Friend |
+|:---:|:---:|
+| <img src="screenshots/friend-details.png" width="400"> | <img src="screenshots/add-friend.png" width="400"> |
 
 
-## 🌐 Live Demo
+## 🚀 Deployment
 
-<!-- Live demo link will be added after deployment. -->
+**Frontend:** [Friends Manager](https://friends-manager-app-p64g.onrender.com)
+
+**Backend API:** [Friends Manager API](https://friends-manager-app.onrender.com)
 
 ## 👨‍💻 Developed By
 
