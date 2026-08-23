@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 import "../App.css";
 
 function AddFriend() {
@@ -33,7 +34,7 @@ function AddFriend() {
             return;
         }
 
-        const response = await fetch("http://localhost:5000/api/friends", {
+        const response = await fetch(`${API_URL}/api/friends`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

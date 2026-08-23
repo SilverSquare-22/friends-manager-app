@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { API_URL } from "../config";
 import "../App.css";
 
 function FriendDetails() {
@@ -15,7 +16,7 @@ function FriendDetails() {
                 const userId = localStorage.getItem("userId");
 
                 const response = await fetch(
-                    `http://localhost:5000/api/friends/${id}?userId=${userId}`
+                    `${API_URL}/api/friends/${id}?userId=${userId}`
                 );
 
                 const data = await response.json();
@@ -33,6 +34,36 @@ function FriendDetails() {
 
         fetchFriend();
     }, [id]);
+
+    const handleDelete = async () => {
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this friend?"
+        );
+
+        if (!confirmed) return;
+
+        try {
+            const userId = localStorage.getItem("userId");
+
+            const response = await fetch(
+                `${API_URL}/api/friends/${id}?userId=${userId}`,
+                {
+                    method: "DELETE"
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert(data.message || "Unable to delete friend.");
+                return;
+            }
+
+            navigate("/dashboard");
+        } catch (err) {
+            alert("Unable to connect to the server.");
+        }
+    };
 
     if (error) {
         return (
@@ -132,6 +163,15 @@ function FriendDetails() {
                                 <strong>{friend.date_joined}</strong>
                             </div>
                         )}
+                    </div>
+
+                    <div className="details-actions">
+                        <button
+                            className="delete-btn"
+                            onClick={handleDelete}
+                        >
+                            🗑️ Delete Friend
+                        </button>
                     </div>
                 </div>
             </div>

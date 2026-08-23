@@ -671,7 +671,7 @@ button {
   box-shadow: 0 8px 25px rgba(45, 41, 38, 0.05);
 }
 
-.details-error > div {
+.details-error>div {
   font-size: 42px;
 }
 
@@ -762,4 +762,29 @@ button {
   .info-item strong {
     text-align: left;
   }
+}
+
+.details-actions {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #f0e7e2;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-btn {
+  padding: 11px 18px;
+  border: 1px solid #e8dcd6;
+  border-radius: 9px;
+  background: #ffffff;
+  color: #d85f43;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #fff7f3;
+  border-color: #d85f43;
 }

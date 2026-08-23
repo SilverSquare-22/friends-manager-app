@@ -1,0 +1,1 @@
+export const API_URL = "https://friends-manager-app.onrender.com";

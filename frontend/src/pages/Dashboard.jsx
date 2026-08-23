@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../config";
 import "../App.css";
 
 function Dashboard() {
@@ -11,7 +12,7 @@ function Dashboard() {
             const userId = localStorage.getItem("userId");
 
             const response = await fetch(
-                `http://localhost:5000/api/friends?userId=${userId}`
+                `${API_URL}/api/friends?userId=${userId}`
             );
 
             const data = await response.json();
