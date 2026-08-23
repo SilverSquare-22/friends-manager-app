@@ -3,13 +3,45 @@ const express = require("express");
 const cors = require("cors");
 
 const app = express();
-const PORT = 5000;
 
 app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
     res.json({ message: "Friends Manager API is running..." });
+});
+
+app.post("/api/register", (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).json({
+            message: "Username and password are required"
+        });
+    }
+
+    db.run(
+        "INSERT INTO users (username, password) VALUES (?, ?)",
+        [username, password],
+        function (err) {
+            if (err) {
+                if (err.message.includes("UNIQUE")) {
+                    return res.status(409).json({
+                        message: "Username already exists"
+                    });
+                }
+
+                return res.status(500).json({
+                    message: "Database error"
+                });
+            }
+
+            res.status(201).json({
+                message: "Account created successfully",
+                userId: this.lastID
+            });
+        }
+    );
 });
 
 app.post("/api/login", (req, res) => {
@@ -20,44 +52,60 @@ app.post("/api/login", (req, res) => {
         [username, password],
         (err, user) => {
             if (err) {
-                return res.status(500).json({ message: "Database error" });
+                return res.status(500).json({
+                    message: "Database error"
+                });
             }
 
             if (!user) {
-                return res.status(401).json({ message: "Invalid credentials" });
+                return res.status(401).json({
+                    message: "Invalid credentials"
+                });
             }
 
             res.json({
                 message: "Login successful",
-                token: "demo-token"
+                token: "demo-token",
+                userId: user.id
             });
         }
     );
 });
 
 app.get("/api/friends", (req, res) => {
-    db.all("SELECT * FROM friends", [], (err, friends) => {
-        if (err) {
-            return res.status(500).json({ message: "Database error" });
-        }
+    db.all(
+        "SELECT * FROM friends WHERE user_id = ?",
+        [req.query.userId],
+        (err, friends) => {
+            if (err) {
+                return res.status(500).json({
+                    message: "Database error"
+                });
+            }
 
-        res.json(friends);
-    });
+            res.json(friends);
+        }
+    );
 });
 
 app.get("/api/friends/:id", (req, res) => {
     const { id } = req.params;
+    const { userId } = req.query;
 
     db.get(
-        "SELECT * FROM friends WHERE id = ?",
-        [id],
+        "SELECT * FROM friends WHERE id = ? AND user_id = ?",
+        [id, userId],
         (err, friend) => {
             if (err) {
-                return res.status(500).json({ message: "Database error" });
+                return res.status(500).json({
+                    message: "Database error"
+                });
             }
 
             if (!friend) {
-                return res.status(404).json({ message: "Friend not found" });
+                return res.status(404).json({
+                    message: "Friend not found"
+                });
             }
 
             res.json(friend);
@@ -67,6 +115,7 @@ app.get("/api/friends/:id", (req, res) => {
 
 app.post("/api/friends", (req, res) => {
     const {
+        userId,
         name,
         email,
         phone,
@@ -77,19 +126,20 @@ app.post("/api/friends", (req, res) => {
         date_joined
     } = req.body;
 
-    if (!name || !email) {
+    if (!userId || !name || !email) {
         return res.status(400).json({
-            message: "Name and email are required"
+            message: "User ID, name and email are required"
         });
     }
 
     const sql = `
         INSERT INTO friends
-        (name, email, phone, role, bio, hobbies, image_url, date_joined)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        (user_id, name, email, phone, role, bio, hobbies, image_url, date_joined)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     const values = [
+        userId,
         name,
         email,
         phone,
@@ -114,6 +164,6 @@ app.post("/api/friends", (req, res) => {
     });
 });
 
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(5000, () => {
+    console.log("Server running on http://localhost:5000");
 });

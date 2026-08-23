@@ -1,6 +1,9 @@
 const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
-const db = new sqlite3.Database("./friends.db", (err) => {
+const dbPath = path.join(__dirname, "friends.db");
+
+const db = new sqlite3.Database(dbPath, (err) => {
     if (err) {
         console.error("Database connection failed:", err.message);
     } else {
@@ -20,6 +23,7 @@ db.serialize(() => {
     db.run(`
         CREATE TABLE IF NOT EXISTS friends (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
             name TEXT NOT NULL,
             email TEXT NOT NULL,
             phone TEXT,
@@ -30,29 +34,6 @@ db.serialize(() => {
             date_joined TEXT
         )
     `);
-
-    db.run(
-        `INSERT OR IGNORE INTO users (username, password)
-     VALUES (?, ?)`,
-        ["admin", "admin123"]
-    );
 });
-
-db.run(
-    `INSERT OR IGNORE INTO friends 
-    (id, name, email, phone, role, bio, hobbies, image_url, date_joined)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-    [
-        1,
-        "Arjun Kumar",
-        "arjun@example.com",
-        "+91 9876543210",
-        "Software Developer",
-        "Loves building things and exploring new technologies.",
-        "Coding, Gaming, Coffee",
-        "https://i.pravatar.cc/150?img=12",
-        "2026-08-20"
-    ]
-);
 
 module.exports = db;

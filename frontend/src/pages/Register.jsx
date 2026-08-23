@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../App.css";
 
 function Register() {
     const navigate = useNavigate();
@@ -32,30 +33,48 @@ function Register() {
     };
 
     return (
-        <div>
-            <h1>Create Account</h1>
+        <div className="auth-page">
+            <div className="auth-card">
+                <div className="auth-icon">✨</div>
 
-            <form onSubmit={handleRegister}>
-                <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                <h1>Create Account</h1>
+                <p className="auth-subtitle">
+                    Start building your circle
+                </p>
 
-                <input
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
+                <form onSubmit={handleRegister} className="auth-form">
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        required
+                    />
 
-                <button type="submit">Create Account</button>
-            </form>
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        required
+                    />
 
-            <button onClick={() => navigate("/")}>
-                Back to Login
-            </button>
+                    <button type="submit" className="primary-btn">
+                        Create Account
+                    </button>
+                </form>
+
+                <p className="auth-footer">
+                    Already have an account?{" "}
+                    <button
+                        type="button"
+                        className="link-btn"
+                        onClick={() => navigate("/")}
+                    >
+                        Login
+                    </button>
+                </p>
+            </div>
         </div>
     );
 }

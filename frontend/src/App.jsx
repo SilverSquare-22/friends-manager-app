@@ -5,7 +5,9 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import FriendDetails from "./pages/FriendDetails";
 import AddFriend from "./pages/AddFriend";
+
 import ProtectedRoute from "./components/ProtectedRoute";
+import Layout from "./components/Layout";
 
 function App() {
   return (
@@ -19,7 +21,9 @@ function App() {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <Layout>
+                <Dashboard />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -28,7 +32,9 @@ function App() {
           path="/friends/:id"
           element={
             <ProtectedRoute>
-              <FriendDetails />
+              <Layout>
+                <FriendDetails />
+              </Layout>
             </ProtectedRoute>
           }
         />
@@ -37,7 +43,9 @@ function App() {
           path="/add-friend"
           element={
             <ProtectedRoute>
-              <AddFriend />
+              <Layout>
+                <AddFriend />
+              </Layout>
             </ProtectedRoute>
           }
         />
